@@ -152,7 +152,7 @@ export default function CurrencyConverter() {
 									<SelectTrigger className="w-24">
 										<SelectValue />
 									</SelectTrigger>
-									<SelectContent>
+									<SelectContent className="z-50">
 										{currencies.map((currency) => (
 											<SelectItem key={currency.code} value={currency.code}>
 												{currency.code}
@@ -193,7 +193,7 @@ export default function CurrencyConverter() {
 									<SelectTrigger className="w-24">
 										<SelectValue />
 									</SelectTrigger>
-									<SelectContent>
+									<SelectContent className="z-50">
 										{currencies.map((currency) => (
 											<SelectItem key={currency.code} value={currency.code}>
 												{currency.code}

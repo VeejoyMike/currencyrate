@@ -51,4 +51,21 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer utilities {
+  /* 确保下拉菜单和弹出层在最顶层 */
+  [data-radix-popper-content-wrapper] {
+    z-index: 9999 !important;
+  }
+  
+  /* Select 下拉菜单样式 */
+  [data-radix-select-content] {
+    z-index: 9999 !important;
+  }
+  
+  /* 确保所有弹出层都在最顶层 */
+  [data-radix-portal] {
+    z-index: 9999 !important;
+  }
 } 
