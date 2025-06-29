@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { RefreshCw, TrendingUp, TrendingDown, ArrowRightLeft, Calculator } from "lucide-react";
+import { RefreshCw, ArrowRightLeft, Calculator } from "lucide-react";
 import { toast } from "sonner";
 
 // 支持的货币列表
@@ -124,154 +124,152 @@ export default function CurrencyConverter() {
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
-			<div className="max-w-md mx-auto">
-				{/* 标题区域 */}
-				<div className="text-center mb-6">
-					<div className="flex items-center justify-center gap-2 mb-2">
+			<div className="max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+				{/* 左侧：主转换区 */}
+				<div>
+					<div className="flex items-center gap-2 mb-6">
 						<Calculator className="h-8 w-8 text-blue-600" />
 						<h1 className="text-2xl font-bold text-gray-900">汇率转换器</h1>
 					</div>
-					<p className="text-sm text-gray-600">实时汇率，双向转换</p>
-				</div>
-
-				{/* 主要转换卡片 */}
-				<Card className="mb-4 shadow-lg">
-					<CardHeader className="pb-3">
-						<CardTitle className="text-lg flex items-center gap-2">
-							<ArrowRightLeft className="h-5 w-5 text-blue-600" />
-							货币转换
-						</CardTitle>
-						<CardDescription>选择货币并输入金额进行转换</CardDescription>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						{/* 源货币输入 */}
-						<div className="space-y-2">
-							<Label className="text-sm font-medium">从</Label>
-							<div className="flex gap-2">
-								<Select value={sourceCurrency} onValueChange={setSourceCurrency}>
-									<SelectTrigger className="w-24">
-										<SelectValue />
-									</SelectTrigger>
-									<SelectContent className="z-50">
-										{currencies.map((currency) => (
-											<SelectItem key={currency.code} value={currency.code}>
-												{currency.code}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-								<Input
-									type="number"
-									value={sourceAmount}
-									onChange={(e) => setSourceAmount(e.target.value)}
-									placeholder="0.00"
-									className="flex-1 text-lg"
-								/>
-							</div>
-							<div className="text-xs text-gray-500">
-								{currencies.find(c => c.code === sourceCurrency)?.name}
-							</div>
-						</div>
-
-						{/* 交换按钮 */}
-						<div className="flex justify-center">
-							<Button
-								variant="outline"
-								size="sm"
-								onClick={swapCurrencies}
-								className="rounded-full w-10 h-10 p-0"
-							>
-								<ArrowRightLeft className="h-4 w-4" />
-							</Button>
-						</div>
-
-						{/* 目标货币显示 */}
-						<div className="space-y-2">
-							<Label className="text-sm font-medium">到</Label>
-							<div className="flex gap-2">
-								<Select value={targetCurrency} onValueChange={setTargetCurrency}>
-									<SelectTrigger className="w-24">
-										<SelectValue />
-									</SelectTrigger>
-									<SelectContent className="z-50">
-										{currencies.map((currency) => (
-											<SelectItem key={currency.code} value={currency.code}>
-												{currency.code}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-								<div className="flex-1 bg-gray-50 rounded-md px-3 py-2 text-lg font-semibold text-gray-900">
-									{formatAmount(targetAmount, targetCurrency)}
+					<Card className="mb-4 shadow-lg">
+						<CardHeader className="pb-3">
+							<CardTitle className="text-lg flex items-center gap-2">
+								<ArrowRightLeft className="h-5 w-5 text-blue-600" />
+								货币转换
+							</CardTitle>
+							<CardDescription>选择货币并输入金额进行转换</CardDescription>
+						</CardHeader>
+						<CardContent className="space-y-4">
+							{/* 源货币输入 */}
+							<div className="space-y-2">
+								<Label className="text-sm font-medium">从</Label>
+								<div className="flex gap-2">
+									<Select value={sourceCurrency} onValueChange={setSourceCurrency}>
+										<SelectTrigger className="w-24">
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent className="z-50">
+											{currencies.map((currency) => (
+												<SelectItem key={currency.code} value={currency.code}>
+													{currency.code}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+									<Input
+										type="number"
+										value={sourceAmount}
+										onChange={(e) => setSourceAmount(e.target.value)}
+										placeholder="0.00"
+										className="flex-1 text-lg"
+									/>
+								</div>
+								<div className="text-xs text-gray-500">
+									{currencies.find(c => c.code === sourceCurrency)?.name}
 								</div>
 							</div>
-							<div className="text-xs text-gray-500">
-								{currencies.find(c => c.code === targetCurrency)?.name}
-							</div>
-						</div>
 
-						{/* 汇率信息 */}
-						<div className="bg-blue-50 rounded-lg p-3">
-							<div className="text-sm text-blue-800">
-								<div className="font-medium mb-1">当前汇率</div>
-								<div>1 {sourceCurrency} = {getRateDisplay(sourceCurrency, targetCurrency)} {targetCurrency}</div>
-								<div>1 {targetCurrency} = {getRateDisplay(targetCurrency, sourceCurrency)} {sourceCurrency}</div>
-							</div>
-						</div>
-					</CardContent>
-				</Card>
-
-				{/* 刷新按钮 */}
-				<div className="flex justify-center mb-4">
-					<Button
-						onClick={refreshRates}
-						disabled={loading}
-						className="w-full max-w-xs"
-					>
-						<RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-						{loading ? '更新中...' : '刷新汇率'}
-					</Button>
-				</div>
-
-				{/* 常用货币快速转换 */}
-				<Card className="shadow-lg">
-					<CardHeader className="pb-3">
-						<CardTitle className="text-lg">常用货币</CardTitle>
-						<CardDescription>点击快速查看汇率</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<div className="grid grid-cols-2 gap-3">
-							{currencies.slice(1, 9).map((currency) => (
-								<div
-									key={currency.code}
-									className="p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-									onClick={() => {
-										setSourceCurrency("CNY");
-										setTargetCurrency(currency.code);
-										setSourceAmount("100");
-									}}
+							{/* 交换按钮 */}
+							<div className="flex justify-center">
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={swapCurrencies}
+									className="rounded-full w-10 h-10 p-0"
 								>
-									<div className="flex justify-between items-center mb-1">
-										<span className="font-medium text-sm">{currency.name}</span>
-										<Badge variant="secondary" className="text-xs">
-											{currency.code}
-										</Badge>
-									</div>
-									<div className="text-lg font-bold text-green-600">
-										{formatAmount(getRateDisplay("CNY", currency.code), currency.code)}
-									</div>
-									<div className="text-xs text-gray-500">
-										100 CNY = {getRateDisplay("CNY", currency.code)} {currency.code}
+									<ArrowRightLeft className="h-4 w-4" />
+								</Button>
+							</div>
+
+							{/* 目标货币显示 */}
+							<div className="space-y-2">
+								<Label className="text-sm font-medium">到</Label>
+								<div className="flex gap-2">
+									<Select value={targetCurrency} onValueChange={setTargetCurrency}>
+										<SelectTrigger className="w-24">
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent className="z-50">
+											{currencies.map((currency) => (
+												<SelectItem key={currency.code} value={currency.code}>
+													{currency.code}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+									<div className="flex-1 bg-gray-50 rounded-md px-3 py-2 text-lg font-semibold text-gray-900">
+										{formatAmount(targetAmount, targetCurrency)}
 									</div>
 								</div>
-							))}
-						</div>
-					</CardContent>
-				</Card>
+								<div className="text-xs text-gray-500">
+									{currencies.find(c => c.code === targetCurrency)?.name}
+								</div>
+							</div>
 
-				{/* 更新时间 */}
-				<div className="text-center mt-4 text-xs text-gray-500">
-					最后更新: {lastUpdated.toLocaleString('zh-CN')}
+							{/* 汇率信息 */}
+							<div className="bg-blue-50 rounded-lg p-3">
+								<div className="text-sm text-blue-800">
+									<div className="font-medium mb-1">当前汇率</div>
+									<div>1 {sourceCurrency} = {getRateDisplay(sourceCurrency, targetCurrency)} {targetCurrency}</div>
+									<div>1 {targetCurrency} = {getRateDisplay(targetCurrency, sourceCurrency)} {sourceCurrency}</div>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+
+					{/* 刷新按钮 */}
+					<div className="flex justify-center mb-4">
+						<Button
+							onClick={refreshRates}
+							disabled={loading}
+							className="w-full max-w-xs"
+						>
+							<RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+							{loading ? '更新中...' : '刷新汇率'}
+						</Button>
+					</div>
+
+					{/* 更新时间 */}
+					<div className="text-center mt-2 text-xs text-gray-500">
+						最后更新: {lastUpdated.toLocaleString('zh-CN')}
+					</div>
+				</div>
+				{/* 右侧：常用货币区 */}
+				<div>
+					<Card className="shadow-lg">
+						<CardHeader className="pb-3">
+							<CardTitle className="text-lg">常用货币</CardTitle>
+							<CardDescription>点击快速查看汇率</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div className="grid grid-cols-2 md:grid-cols-1 gap-3">
+								{currencies.slice(1, 9).map((currency) => (
+									<div
+										key={currency.code}
+										className="p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+										onClick={() => {
+											setSourceCurrency("CNY");
+											setTargetCurrency(currency.code);
+											setSourceAmount("100");
+										}}
+									>
+										<div className="flex justify-between items-center mb-1">
+											<span className="font-medium text-sm">{currency.name}</span>
+											<Badge variant="secondary" className="text-xs">
+												{currency.code}
+											</Badge>
+										</div>
+										<div className="text-lg font-bold text-green-600">
+											{formatAmount(getRateDisplay("CNY", currency.code), currency.code)}
+										</div>
+										<div className="text-xs text-gray-500">
+											100 CNY = {getRateDisplay("CNY", currency.code)} {currency.code}
+										</div>
+									</div>
+								))}
+							</div>
+						</CardContent>
+					</Card>
 				</div>
 			</div>
 		</div>
