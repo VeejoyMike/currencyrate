@@ -482,7 +482,7 @@ const run = async (moduleFactory)=>{
     }
 };
 }}),
-"[turbopack-node]/ipc/evaluate.ts/evaluate.js { INNER => \"[project]/postcss.config.js/transform.ts { CONFIG => \\\"[project]/postcss.config.js_.loader.mjs [postcss] (ecmascript)\\\" } [postcss] (ecmascript)\", RUNTIME => \"[turbopack-node]/ipc/evaluate.ts [postcss] (ecmascript)\" } [postcss] (ecmascript)": ((__turbopack_context__) => {
+"[turbopack-node]/ipc/evaluate.ts/evaluate.js { INNER => \"[project]/postcss.config.cjs/transform.ts { CONFIG => \\\"[project]/postcss.config.cjs [postcss] (ecmascript)\\\" } [postcss] (ecmascript)\", RUNTIME => \"[turbopack-node]/ipc/evaluate.ts [postcss] (ecmascript)\" } [postcss] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname } = __turbopack_context__;
@@ -490,9 +490,9 @@ var { g: global, __dirname } = __turbopack_context__;
 __turbopack_context__.s({});
 var __TURBOPACK__imported__module__$5b$turbopack$2d$node$5d2f$ipc$2f$evaluate$2e$ts__$5b$postcss$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[turbopack-node]/ipc/evaluate.ts [postcss] (ecmascript)");
 ;
-(0, __TURBOPACK__imported__module__$5b$turbopack$2d$node$5d2f$ipc$2f$evaluate$2e$ts__$5b$postcss$5d$__$28$ecmascript$29$__["run"])(()=>__turbopack_context__.r('[project]/postcss.config.js/transform.ts { CONFIG => "[project]/postcss.config.js_.loader.mjs [postcss] (ecmascript)" } [postcss] (ecmascript, async loader)')(__turbopack_context__.i));
+(0, __TURBOPACK__imported__module__$5b$turbopack$2d$node$5d2f$ipc$2f$evaluate$2e$ts__$5b$postcss$5d$__$28$ecmascript$29$__["run"])(()=>__turbopack_context__.r('[project]/postcss.config.cjs/transform.ts { CONFIG => "[project]/postcss.config.cjs [postcss] (ecmascript)" } [postcss] (ecmascript, async loader)')(__turbopack_context__.i));
 }}),
 
 };
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__23dcc81a._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__87df2cd1._.js.map
